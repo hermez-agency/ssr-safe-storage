@@ -11,15 +11,18 @@
     "typescript"
   ],
   "license": "MIT",
-  "author": "Salvador Cardona",
+  "author": {
+    "name": "Hermez",
+    "url": "https://hermez.dev"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SalvadorCardona/ssr-safe-storage.git"
+    "url": "git+https://github.com/hermez-agency/ssr-safe-storage.git"
   },
   "bugs": {
-    "url": "https://github.com/SalvadorCardona/ssr-safe-storage/issues"
+    "url": "https://github.com/hermez-agency/ssr-safe-storage/issues"
   },
-  "homepage": "https://github.com/SalvadorCardona/ssr-safe-storage#readme",
+  "homepage": "https://github.com/hermez-agency/ssr-safe-storage#readme",
   "type": "module",
   "sideEffects": false,
   "files": [
