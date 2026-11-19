@@ -28,7 +28,7 @@ const localStorageData = {} as Record<string, unknown>
  */
 export function getInStorage<T>(key: string): undefined | T | null {
   if (!isBrowser()) {
-    return localStorageData[key] as T
+    return Object.hasOwn(localStorageData, key) ? (localStorageData[key] as T) : null
   }
 
   const item = localStorage.getItem(key)
