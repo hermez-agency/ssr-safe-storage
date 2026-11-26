@@ -46,6 +46,12 @@ duration of the process. It is not shared between requests and it is not a
 server-side persistence layer — it exists so the calling code can stay identical
 on both sides instead of being wrapped in `typeof window` checks.
 
+The same fallback kicks in inside a browser whose `localStorage` exists but
+cannot be used: Safari in private browsing, blocked cookies or a sandboxed
+iframe throw a `SecurityError` as soon as it is accessed. A test write is made
+on first use and its result is cached for the lifetime of the module, so the
+check runs once and the calls never throw.
+
 ## Development
 
 ```bash

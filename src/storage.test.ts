@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest"
+import { afterEach, describe, expect, it, vi } from "vitest"
 import { getInStorage, removeInStorage, setInStorage } from "@/storage"
 
 describe("LocalStorage Tests", () => {
@@ -62,5 +62,29 @@ describe("LocalStorage Tests", () => {
     // after removal, get should be null
     const result = getInStorage<string>(key)
     expect(result).toBeNull()
+  })
+})
+
+describe("localStorage that throws on access", () => {
+  afterEach(() => {
+    vi.restoreAllMocks()
+    vi.resetModules()
+  })
+
+  it("falls back to the in-memory store when reading localStorage throws", async () => {
+    const getter = vi.spyOn(window, "localStorage", "get").mockImplementation(() => {
+      throw new DOMException("The operation is insecure.", "SecurityError")
+    })
+    vi.resetModules()
+    const { getInStorage, removeInStorage, setInStorage } = await import("@/storage")
+
+    expect(getInStorage("blocked")).toBeNull()
+    setInStorage("blocked", { a: 1 })
+    expect(getInStorage("blocked")).toEqual({ a: 1 })
+    removeInStorage("blocked")
+    expect(getInStorage("blocked")).toBeNull()
+
+    // Detection runs once per module load, not on every call.
+    expect(getter).toHaveBeenCalledTimes(1)
   })
 })
